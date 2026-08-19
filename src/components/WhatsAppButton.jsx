@@ -2,7 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 function WhatsAppButton() {
-  const phoneNumber = "8429400771";
+  const phoneNumber = "918429400771";
 
   const message =
     "Hi Future Path Education, I need admission guidance.";
