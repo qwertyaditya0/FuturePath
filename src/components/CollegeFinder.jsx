@@ -13,58 +13,67 @@ import {
 
 const colleges = [
   {
-    name: "Future Institute of Technology",
+    name: "Galgotias University",
     location: "Greater Noida",
     course: "B.Tech",
-    fees: 120000,
+    fees: 150000,
     package: 6.5,
     rating: 4.4,
     ranking: 1,
   },
   {
-    name: "Delhi NCR Technical University",
-    location: "Noida",
+    name: "Sharda University",
+    location: "Greater Noida",
     course: "B.Tech",
-    fees: 150000,
-    package: 7.2,
-    rating: 4.6,
+    fees: 180000,
+    package: 6.8,
+    rating: 4.5,
     ranking: 2,
   },
   {
-    name: "National School of Management",
-    location: "Delhi",
-    course: "MBA",
-    fees: 180000,
-    package: 8.1,
-    rating: 4.5,
+    name: "GL Bajaj Institute of Technology and Management",
+    location: "Greater Noida",
+    course: "B.Tech",
+    fees: 125000,
+    package: 7.0,
+    rating: 4.3,
     ranking: 3,
   },
   {
-    name: "Greater Noida Business School",
+    name: "Galgotias College of Engineering and Technology",
     location: "Greater Noida",
-    course: "MBA",
+    course: "B.Tech",
     fees: 110000,
-    package: 6.8,
+    package: 6.2,
     rating: 4.2,
     ranking: 4,
   },
   {
-    name: "NCR Institute of Computer Applications",
-    location: "Noida",
-    course: "BCA",
-    fees: 85000,
-    package: 5.2,
+    name: "Noida Institute of Engineering and Technology",
+    location: "Greater Noida",
+    course: "B.Tech",
+    fees: 120000,
+    package: 5.8,
     rating: 4.1,
     ranking: 5,
   },
   {
-    name: "Delhi Institute of Technology",
-    location: "Delhi",
-    course: "B.Tech",
-    fees: 95000,
-    package: 5.8,
-    rating: 4.3,
+    name: "G.L. Bajaj Institute of Management and Research",
+    location: "Greater Noida",
+    course: "MBA",
+    fees: 140000,
+    package: 6.0,
+    rating: 4.2,
     ranking: 6,
+  },
+  {
+    name: "Delhi Technical Campus",
+    location: "Greater Noida",
+    course: "B.Tech",
+    fees: 110000,
+    package: 5.5,
+    rating: 4.1,
+    ranking: 7,
   },
 ];
 
@@ -76,8 +85,9 @@ function CollegeFinder() {
 
   const filteredColleges = useMemo(() => {
     return colleges.filter((college) => {
-      const matchesSearch =
-        college.name.toLowerCase().includes(search.toLowerCase());
+      const matchesSearch = college.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
       const matchesCourse =
         course === "All" || college.course === course;
@@ -86,7 +96,8 @@ function CollegeFinder() {
         location === "All" || college.location === location;
 
       const matchesFees =
-        maxFees === "All" || college.fees <= Number(maxFees);
+        maxFees === "All" ||
+        college.fees <= Number(maxFees);
 
       return (
         matchesSearch &&
@@ -96,6 +107,13 @@ function CollegeFinder() {
       );
     });
   }, [search, course, location, maxFees]);
+
+  const resetFilters = () => {
+    setSearch("");
+    setCourse("All");
+    setLocation("All");
+    setMaxFees("All");
+  };
 
   return (
     <section
@@ -119,12 +137,14 @@ function CollegeFinder() {
 
           <h2 className="mt-5 text-3xl font-black tracking-tight text-blue-950 sm:text-4xl lg:text-5xl">
             Find Your{" "}
-            <span className="text-red-600">Perfect College.</span>
+            <span className="text-red-600">
+              Perfect College.
+            </span>
           </h2>
 
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-            Search and compare colleges based on course, location, fees and
-            placement opportunities.
+            Search and compare colleges based on course,
+            location, fees and placement opportunities.
           </p>
         </motion.div>
 
@@ -150,6 +170,7 @@ function CollegeFinder() {
           {/* Filters */}
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
+            {/* Course */}
             <div>
               <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
                 Course
@@ -160,13 +181,21 @@ function CollegeFinder() {
                 onChange={(e) => setCourse(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 outline-none focus:border-blue-700"
               >
-                <option value="All">All Courses</option>
-                <option value="B.Tech">B.Tech</option>
-                <option value="MBA">MBA</option>
-                <option value="BCA">BCA</option>
+                <option value="All">
+                  All Courses
+                </option>
+
+                <option value="B.Tech">
+                  B.Tech
+                </option>
+
+                <option value="MBA">
+                  MBA
+                </option>
               </select>
             </div>
 
+            {/* Location */}
             <div>
               <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
                 Location
@@ -177,15 +206,17 @@ function CollegeFinder() {
                 onChange={(e) => setLocation(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 outline-none focus:border-blue-700"
               >
-                <option value="All">All Locations</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Noida">Noida</option>
+                <option value="All">
+                  All Locations
+                </option>
+
                 <option value="Greater Noida">
                   Greater Noida
                 </option>
               </select>
             </div>
 
+            {/* Maximum Fees */}
             <div>
               <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
                 Maximum Fees
@@ -196,22 +227,32 @@ function CollegeFinder() {
                 onChange={(e) => setMaxFees(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 outline-none focus:border-blue-700"
               >
-                <option value="All">Any Fees</option>
-                <option value="100000">Under ₹1 Lakh</option>
-                <option value="125000">Under ₹1.25 Lakh</option>
-                <option value="150000">Under ₹1.5 Lakh</option>
-                <option value="200000">Under ₹2 Lakh</option>
+                <option value="All">
+                  Any Fees
+                </option>
+
+                <option value="100000">
+                  Under ₹1 Lakh
+                </option>
+
+                <option value="125000">
+                  Under ₹1.25 Lakh
+                </option>
+
+                <option value="150000">
+                  Under ₹1.5 Lakh
+                </option>
+
+                <option value="200000">
+                  Under ₹2 Lakh
+                </option>
               </select>
             </div>
 
+            {/* Reset */}
             <div className="flex items-end">
               <button
-                onClick={() => {
-                  setSearch("");
-                  setCourse("All");
-                  setLocation("All");
-                  setMaxFees("All");
-                }}
+                onClick={resetFilters}
                 className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50"
               >
                 <SlidersHorizontal size={17} />
@@ -238,23 +279,36 @@ function CollegeFinder() {
         {/* College Cards */}
         {filteredColleges.length > 0 ? (
           <div className="mt-5 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
             {filteredColleges.map((college, index) => (
               <motion.div
                 key={college.name}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                initial={{
+                  opacity: 0,
+                  y: 25,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
                 transition={{
                   duration: 0.5,
                   delay: index * 0.08,
                 }}
-                whileHover={{ y: -6 }}
+                whileHover={{
+                  y: -6,
+                }}
                 className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-xl"
               >
+
                 {/* College Header */}
                 <div className="relative bg-blue-950 p-5">
 
                   <div className="flex items-start justify-between gap-3">
+
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-yellow-400">
                       <GraduationCap size={25} />
                     </div>
@@ -262,6 +316,7 @@ function CollegeFinder() {
                     <span className="rounded-full bg-yellow-400 px-3 py-1 text-xs font-black text-blue-950">
                       #{college.ranking}
                     </span>
+
                   </div>
 
                   <h3 className="mt-5 text-lg font-extrabold leading-6 text-white">
@@ -272,12 +327,14 @@ function CollegeFinder() {
                     <MapPin size={13} />
                     {college.location}
                   </p>
+
                 </div>
 
                 {/* Card Body */}
                 <div className="p-5">
 
                   <div className="flex items-center justify-between">
+
                     <span className="rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-900">
                       {college.course}
                     </span>
@@ -289,11 +346,14 @@ function CollegeFinder() {
                       />
                       {college.rating}
                     </div>
+
                   </div>
 
+                  {/* Fees + Package */}
                   <div className="mt-5 grid grid-cols-2 gap-3">
 
                     <div className="rounded-xl bg-slate-50 p-3">
+
                       <p className="text-[11px] font-semibold text-slate-400">
                         Annual Fees
                       </p>
@@ -302,9 +362,11 @@ function CollegeFinder() {
                         <IndianRupee size={13} />
                         {(college.fees / 1000).toFixed(0)}K
                       </p>
+
                     </div>
 
                     <div className="rounded-xl bg-slate-50 p-3">
+
                       <p className="text-[11px] font-semibold text-slate-400">
                         Avg Package
                       </p>
@@ -313,17 +375,35 @@ function CollegeFinder() {
                         <TrendingUp size={14} />
                         ₹{college.package} LPA
                       </p>
+
                     </div>
 
                   </div>
 
+                  {/* Buttons */}
                   <div className="mt-5 grid grid-cols-2 gap-3">
 
-                    <button className="rounded-xl border border-blue-900 px-3 py-3 text-xs font-bold text-blue-900 transition hover:bg-blue-950 hover:text-white">
+                    <button
+                      onClick={() =>
+                        alert(
+                          `${college.name}\n\nCourse: ${college.course}\nLocation: ${college.location}\nAnnual Fees: ₹${college.fees.toLocaleString("en-IN")}\nAverage Package: ₹${college.package} LPA`
+                        )
+                      }
+                      className="rounded-xl border border-blue-900 px-3 py-3 text-xs font-bold text-blue-900 transition hover:bg-blue-950 hover:text-white"
+                    >
                       View College
                     </button>
 
-                    <button className="flex items-center justify-center gap-1 rounded-xl bg-red-600 px-3 py-3 text-xs font-bold text-white transition hover:bg-red-700">
+                    <button
+                      onClick={() => {
+                        document
+                          .getElementById("counseling")
+                          ?.scrollIntoView({
+                            behavior: "smooth",
+                          });
+                      }}
+                      className="flex items-center justify-center gap-1 rounded-xl bg-red-600 px-3 py-3 text-xs font-bold text-white transition hover:bg-red-700"
+                    >
                       Counselor
                       <ArrowRight size={14} />
                     </button>
@@ -331,11 +411,16 @@ function CollegeFinder() {
                   </div>
 
                 </div>
+
               </motion.div>
             ))}
+
           </div>
         ) : (
+
+          /* No Results */
           <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+
             <GraduationCap
               size={40}
               className="mx-auto text-slate-300"
@@ -348,6 +433,14 @@ function CollegeFinder() {
             <p className="mt-2 text-sm text-slate-500">
               Try changing your search or filters.
             </p>
+
+            <button
+              onClick={resetFilters}
+              className="mt-5 rounded-xl bg-blue-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-900"
+            >
+              Reset Filters
+            </button>
+
           </div>
         )}
 
